@@ -5,8 +5,7 @@ const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json()
-    const { table, method = 'POST', payload, query } = body
+    const { table, method = 'POST', payload, query, prefer } = await req.json()
     
     let url = `${SUPABASE_URL}/rest/v1/${table}`
     if (query) url += `?${query}`
@@ -15,6 +14,11 @@ export async function POST(req: NextRequest) {
       'apikey': SUPABASE_KEY,
       'Authorization': `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json'
+    }
+    
+    // Truyền header Prefer nếu có (dùng cho upsert)
+    if (prefer) {
+      headers['Prefer'] = prefer
     }
     
     const options: RequestInit = {
@@ -27,7 +31,8 @@ export async function POST(req: NextRequest) {
     }
     
     const res = await fetch(url, options)
-    const data = await res.json()
+    // 204 No Content (upsert có thể trả về 204)
+    const data = res.status === 204 ? null : await res.json().catch(() => null)
     
     return NextResponse.json({ ok: res.ok, status: res.status, data })
   } catch (e: any) {
