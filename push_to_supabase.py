@@ -19,7 +19,7 @@ def push_to_supabase():
         
         payload = {
             'slug': slug,
-            'title': comic.get('title', slug.replace('-', ' ').title()),
+            'title': comic.get('title') or slug.replace('-', ' ').title(),
             'source_url': url,
             'description': comic.get('description', '')
         }

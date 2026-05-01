@@ -36,7 +36,7 @@ export default async function Home() {
                   {comic.cover_url ? (
                     <img
                       src={comic.cover_url}
-                      alt={comic.title}
+                      alt={comic.title || comic.slug}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
@@ -46,7 +46,7 @@ export default async function Home() {
                 </div>
                 <div className="p-3">
                   <h3 className="text-sm font-medium line-clamp-2 group-hover:text-[#F5A623] transition-colors">
-                    {comic.title}
+                    {comic.title || comic.slug.replace(/-/g, ' ')}
                   </h3>
                 </div>
               </Link>
