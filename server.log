@@ -32,3 +32,7 @@ nohup: ignoring input
 127.0.0.1 - - [02/May/2026 01:38:23] "POST /update-cookie HTTP/1.1" 200 -
 127.0.0.1 - - [02/May/2026 01:38:25] "OPTIONS /sync-comics HTTP/1.1" 200 -
 127.0.0.1 - - [02/May/2026 01:38:25] "POST /sync-comics HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 01:45:04] "OPTIONS /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 01:45:04] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 01:45:06] "OPTIONS /sync-comics HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 01:45:06] "POST /sync-comics HTTP/1.1" 200 -
