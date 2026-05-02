@@ -3,12 +3,20 @@ import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
+// Hàm sửa link ảnh nếu thiếu domain
+function fixImageUrl(url: string | null): string | null {
+  if (!url) return null
+  if (url.startsWith('http')) return url
+  if (url.startsWith('/')) return `https://goctruyentranhvui23.com${url}`
+  return `https://goctruyentranhvui23.com/${url}`
+}
+
 export default async function Home() {
   const supabase = createSupabaseServer()
 
   const { data: comics, error } = await supabase
     .from('comics')
-    .select('slug, title, cover_url')
+    .select('slug, title, cover_url, description')
     .order('created_at', { ascending: false })
     .limit(30)
 
@@ -33,10 +41,10 @@ export default async function Home() {
       background: '#0a0a0b',
       color: 'white',
       minHeight: '100vh',
-      padding: 20,
+      padding: '20px 16px',
       fontFamily: 'Arial, sans-serif'
     }}>
-      <h1 style={{ color: '#F5A623', textAlign: 'center', marginBottom: 20 }}>
+      <h1 style={{ color: '#F5A623', textAlign: 'center', marginBottom: 24, fontSize: 28 }}>
         🐝 Mangabee
       </h1>
       <div style={{
@@ -54,11 +62,20 @@ export default async function Home() {
               background: '#1a1a1a',
               borderRadius: 12,
               overflow: 'hidden',
-              transition: 'transform 0.2s'
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = 'scale(1.03)'
+              e.currentTarget.style.boxShadow = '0 0 20px rgba(245,166,35,0.3)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = 'scale(1)'
+              e.currentTarget.style.boxShadow = 'none'
             }}>
               <div style={{
                 aspectRatio: '3/4',
-                background: '#333',
+                background: '#2a2a2a',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -66,7 +83,7 @@ export default async function Home() {
               }}>
                 {comic.cover_url ? (
                   <img
-                    src={comic.cover_url}
+                    src={fixImageUrl(comic.cover_url)!}
                     alt={comic.title}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     loading="lazy"
@@ -75,14 +92,15 @@ export default async function Home() {
                   <span style={{ fontSize: 40 }}>📚</span>
                 )}
               </div>
-              <div style={{ padding: '8px 12px' }}>
+              <div style={{ padding: '10px 12px' }}>
                 <h3 style={{
                   fontSize: 14,
-                  fontWeight: 'normal',
+                  fontWeight: 500,
                   margin: 0,
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
+                  whiteSpace: 'nowrap',
+                  color: '#EDEBE7'
                 }}>
                   {comic.title || comic.slug.replace(/-/g, ' ')}
                 </h3>
