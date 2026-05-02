@@ -1984,3 +1984,29 @@ nohup: ignoring input
 127.0.0.1 - - [02/May/2026 18:08:26] "POST /enrich-comic HTTP/1.1" 200 -
 127.0.0.1 - - [02/May/2026 18:08:27] "POST /update-cookie HTTP/1.1" 200 -
 127.0.0.1 - - [02/May/2026 18:08:29] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 18:19:34] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=tu-ky-si-diet-the-hoi-quy, title=Tử Kỵ Sĩ Diệt Thế Hồi Quy
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 18:19:38] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 18:19:39] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 18:19:41] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 18:20:28] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=cao-thu-tro-lai, title=Cao Thủ Trở Lại
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 18:20:32] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 18:20:33] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 18:20:35] "POST /update-cookie HTTP/1.1" 200 -

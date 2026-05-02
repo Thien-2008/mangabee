@@ -11,37 +11,45 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
   const currentPage = Math.max(1, parseInt(searchParams.page || '1'))
 
   const supabase = createSupabaseServer()
-
-  // Đếm riêng
-  const { count: totalComics, error: countError } = await supabase
-    .from('comics')
-    .select('*', { count: 'exact', head: true })
-
-  // Lấy dữ liệu riêng
   const from = (currentPage - 1) * PER_PAGE
   const to = from + PER_PAGE - 1
 
+  // Lấy dữ liệu truyện
   const { data: comics, error: dataError } = await supabase
     .from('comics')
     .select('slug, title, cover_url')
     .order('created_at', { ascending: false })
     .range(from, to)
 
-  const totalPages = Math.ceil((totalComics || 0) / PER_PAGE)
+  // Đếm tổng số truyện bằng fetch trực tiếp (chính xác hơn)
+  let totalComics = 0
+  try {
+    const countUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/comics?select=id&head=true&count=exact`
+    const countRes = await fetch(countUrl, {
+      headers: {
+        'apikey': process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`
+      }
+    })
+    // Lấy count từ header Content-Range
+    const contentRange = countRes.headers.get('content-range')
+    if (contentRange) {
+      const match = contentRange.match(/\/(\d+)/)
+      if (match) totalComics = parseInt(match[1], 10)
+    }
+  } catch (e) {
+    console.error('Lỗi đếm truyện:', e)
+  }
 
-  // DEBUG BOX
+  const totalPages = Math.ceil(totalComics / PER_PAGE)
+
+  // Debug
   const debugInfo = {
-    BUILD: '2026-05-02-17h00',
     currentPage,
-    from,
-    to,
     totalComics,
     totalPages,
     comicsLength: comics?.length || 0,
-    countError: countError?.message || null,
-    dataError: dataError?.message || null,
-    serviceKeyExists: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
-    urlExists: !!process.env.NEXT_PUBLIC_SUPABASE_URL
+    dataError: dataError?.message || null
   }
 
   const fixImageUrl = (url: string | null) => {
@@ -53,8 +61,6 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   return (
     <main style={{ background: '#0a0a0b', color: 'white', minHeight: '100vh', padding: '20px 16px', fontFamily: 'Arial' }}>
-
-      {/* DEBUG BOX */}
       <div style={{ background: '#1a1a1a', border: '2px solid #F5A623', borderRadius: 8, padding: 12, marginBottom: 20, fontSize: 13, color: '#F5A623' }}>
         <strong>🐞 DEBUG INFO</strong>
         <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{JSON.stringify(debugInfo, null, 2)}</pre>
@@ -87,7 +93,6 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
         </div>
       )}
 
-      {/* PHÂN TRANG */}
       {totalPages > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6, marginTop: 32, flexWrap: 'wrap' }}>
           {currentPage > 1 ? (
@@ -95,14 +100,12 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
           ) : (
             <span style={{ ...btnStyle, background: '#1a1a1a', color: '#555', cursor: 'not-allowed', opacity: 0.5 }}>← Trước</span>
           )}
-
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
             const isActive = page === currentPage
             return (
               <Link key={page} href={`/?page=${page}`} style={{ ...btnStyle, background: isActive ? '#F5A623' : '#2a2a2a', color: isActive ? '#000' : '#EDEBE7', fontWeight: isActive ? 'bold' : 'normal', border: isActive ? '1px solid #F5A623' : '1px solid #3a3a3a', minWidth: 40, textAlign: 'center' }}>{page}</Link>
             )
           })}
-
           {currentPage < totalPages ? (
             <Link href={`/?page=${currentPage + 1}`} style={btnStyle}>Sau →</Link>
           ) : (
