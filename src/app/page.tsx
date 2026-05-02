@@ -12,20 +12,37 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   const supabase = createSupabaseServer()
 
-  const { count: totalComics } = await supabase
+  // Đếm riêng
+  const { count: totalComics, error: countError } = await supabase
     .from('comics')
     .select('*', { count: 'exact', head: true })
 
-  const totalPages = Math.ceil((totalComics || 0) / PER_PAGE)
-
+  // Lấy dữ liệu riêng
   const from = (currentPage - 1) * PER_PAGE
   const to = from + PER_PAGE - 1
 
-  const { data: comics } = await supabase
+  const { data: comics, error: dataError } = await supabase
     .from('comics')
     .select('slug, title, cover_url')
     .order('created_at', { ascending: false })
     .range(from, to)
+
+  const totalPages = Math.ceil((totalComics || 0) / PER_PAGE)
+
+  // DEBUG BOX
+  const debugInfo = {
+    BUILD: '2026-05-02-17h00',
+    currentPage,
+    from,
+    to,
+    totalComics,
+    totalPages,
+    comicsLength: comics?.length || 0,
+    countError: countError?.message || null,
+    dataError: dataError?.message || null,
+    serviceKeyExists: !!process.env.SUPABASE_SERVICE_ROLE_KEY,
+    urlExists: !!process.env.NEXT_PUBLIC_SUPABASE_URL
+  }
 
   const fixImageUrl = (url: string | null) => {
     if (!url) return null
@@ -36,13 +53,20 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   return (
     <main style={{ background: '#0a0a0b', color: 'white', minHeight: '100vh', padding: '20px 16px', fontFamily: 'Arial' }}>
-<h1 style={{ color: '#F5A623', textAlign: 'center', marginBottom: 24, fontSize: 28 }}>🐝 Mangabee</h1>
+
+      {/* DEBUG BOX */}
+      <div style={{ background: '#1a1a1a', border: '2px solid #F5A623', borderRadius: 8, padding: 12, marginBottom: 20, fontSize: 13, color: '#F5A623' }}>
+        <strong>🐞 DEBUG INFO</strong>
+        <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{JSON.stringify(debugInfo, null, 2)}</pre>
+      </div>
+
+      <h1 style={{ color: '#F5A623', textAlign: 'center', marginBottom: 24, fontSize: 28 }}>🐝 Mangabee</h1>
 
       {!comics || comics.length === 0 ? (
         <p style={{ textAlign: 'center', color: '#9A9AA6' }}>Chưa có truyện nào.</p>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 16 }}>
-          {comics.map((comic) => (
+          {comics.map((comic: any) => (
             <Link key={comic.slug} href={`/truyen/${comic.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
               <div style={{ background: '#1a1a1a', borderRadius: 12, overflow: 'hidden', cursor: 'pointer' }}>
                 <div style={{ aspectRatio: '3/4', background: '#2a2a2a', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -63,28 +87,40 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
         </div>
       )}
 
+      {/* PHÂN TRANG */}
       {totalPages > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 6, marginTop: 32, flexWrap: 'wrap' }}>
           {currentPage > 1 ? (
-            <Link href={`/?page=${currentPage - 1}`} style={{ textDecoration: 'none', padding: '8px 14px', borderRadius: 6, background: '#2a2a2a', color: '#EDEBE7', fontSize: 14, fontWeight: 'bold', border: '1px solid #3a3a3a' }}>← Trước</Link>
+            <Link href={`/?page=${currentPage - 1}`} style={btnStyle}>← Trước</Link>
           ) : (
-            <span style={{ padding: '8px 14px', borderRadius: 6, background: '#1a1a1a', color: '#555', fontSize: 14, fontWeight: 'bold', border: '1px solid #2a2a2a', cursor: 'not-allowed', opacity: 0.5 }}>← Trước</span>
+            <span style={{ ...btnStyle, background: '#1a1a1a', color: '#555', cursor: 'not-allowed', opacity: 0.5 }}>← Trước</span>
           )}
 
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
             const isActive = page === currentPage
             return (
-              <Link key={page} href={`/?page=${page}`} style={{ textDecoration: 'none', padding: '8px 14px', borderRadius: 6, background: isActive ? '#F5A623' : '#2a2a2a', color: isActive ? '#000' : '#EDEBE7', fontSize: 14, fontWeight: isActive ? 'bold' : 'normal', border: isActive ? '1px solid #F5A623' : '1px solid #3a3a3a', minWidth: 40, textAlign: 'center' }}>{page}</Link>
+              <Link key={page} href={`/?page=${page}`} style={{ ...btnStyle, background: isActive ? '#F5A623' : '#2a2a2a', color: isActive ? '#000' : '#EDEBE7', fontWeight: isActive ? 'bold' : 'normal', border: isActive ? '1px solid #F5A623' : '1px solid #3a3a3a', minWidth: 40, textAlign: 'center' }}>{page}</Link>
             )
           })}
 
           {currentPage < totalPages ? (
-            <Link href={`/?page=${currentPage + 1}`} style={{ textDecoration: 'none', padding: '8px 14px', borderRadius: 6, background: '#2a2a2a', color: '#EDEBE7', fontSize: 14, fontWeight: 'bold', border: '1px solid #3a3a3a' }}>Sau →</Link>
+            <Link href={`/?page=${currentPage + 1}`} style={btnStyle}>Sau →</Link>
           ) : (
-            <span style={{ padding: '8px 14px', borderRadius: 6, background: '#1a1a1a', color: '#555', fontSize: 14, fontWeight: 'bold', border: '1px solid #2a2a2a', cursor: 'not-allowed', opacity: 0.5 }}>Sau →</span>
+            <span style={{ ...btnStyle, background: '#1a1a1a', color: '#555', cursor: 'not-allowed', opacity: 0.5 }}>Sau →</span>
           )}
         </div>
       )}
     </main>
   )
+}
+
+const btnStyle: React.CSSProperties = {
+  textDecoration: 'none',
+  padding: '8px 14px',
+  borderRadius: 6,
+  background: '#2a2a2a',
+  color: '#EDEBE7',
+  fontSize: 14,
+  fontWeight: 'bold',
+  border: '1px solid #3a3a3a'
 }
