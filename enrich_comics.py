@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 
 API_PROXY = "https://mangabee.vercel.app/api/supabase"
 COOKIE_FILE = "current_cookie.txt"
-SOURCE_BASE = "https://goctruyentranhvui20.com"
 
 def load_cookie():
     try:
@@ -12,17 +11,18 @@ def load_cookie():
     except:
         return None
 
-def get_comic_detail(slug, cookie):
+def get_comic_detail(source_url, cookie):
     """Lấy cover_url và description từ trang chi tiết truyện"""
-    url = f"{SOURCE_BASE}/truyen/{slug}"
     headers = {
         'User-Agent': 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36',
         'Cookie': cookie,
-        'Referer': SOURCE_BASE
+        'Referer': 'https://goctruyentranhvui20.com/'
     }
     try:
-        resp = requests.get(url, headers=headers, timeout=15)
+        resp = requests.get(source_url, headers=headers, timeout=15)
+        print(f"    Status: {resp.status_code}")
         if resp.status_code != 200:
+            print(f"    Response: {resp.text[:200]}")
             return None, None
         
         soup = BeautifulSoup(resp.text, 'html.parser')
@@ -33,7 +33,7 @@ def get_comic_detail(slug, cookie):
         if og_image and og_image.get('content'):
             cover = og_image['content']
         
-        # Lấy description từ og:description hoặc meta description
+        # Lấy description
         desc = None
         og_desc = soup.find('meta', property='og:description')
         if og_desc and og_desc.get('content'):
@@ -45,15 +45,15 @@ def get_comic_detail(slug, cookie):
         
         return cover, desc
     except Exception as e:
-        print(f"  ⚠️ Lỗi lấy detail {slug}: {e}")
+        print(f"    Lỗi: {e}")
         return None, None
 
 def get_comics_without_cover():
-    """Lấy danh sách truyện chưa có cover_url từ Supabase"""
+    """Lấy danh sách truyện chưa có cover_url + source_url"""
     resp = requests.post(API_PROXY, json={
         'table': 'comics',
         'method': 'GET',
-        'query': 'select=slug,title&cover_url=is.null'
+        'query': 'select=slug,title,source_url&cover_url=is.null'
     })
     data = resp.json().get('data', [])
     return data
@@ -84,8 +84,13 @@ def main():
     count = 0
     for comic in comics:
         slug = comic['slug']
-        print(f"  🔍 {slug}...")
-        cover, desc = get_comic_detail(slug, cookie)
+        source_url = comic.get('source_url')
+        if not source_url:
+            print(f"  ⚠️ {slug}: Không có source_url, bỏ qua")
+            continue
+        
+        print(f"  🔍 {slug} -> {source_url}")
+        cover, desc = get_comic_detail(source_url, cookie)
         
         if not cover and not desc:
             print(f"  ⏭️ Bỏ qua (không lấy được dữ liệu)")
@@ -98,12 +103,12 @@ def main():
             payload['description'] = desc
         
         if update_comic(slug, payload):
-            print(f"  ✅ Đã cập nhật: cover={'✅' if cover else '❌'} desc={'✅' if desc else '❌'}")
+            print(f"  ✅ Đã cập nhật")
             count += 1
         else:
             print(f"  ⚠️ Lỗi cập nhật")
         
-        time.sleep(1)  # Tránh spam
+        time.sleep(1)
     
     print(f"🎉 Hoàn tất! Đã cập nhật {count}/{len(comics)} truyện.")
 
