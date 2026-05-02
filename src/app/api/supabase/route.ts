@@ -20,7 +20,11 @@ export async function POST(req: NextRequest) {
       headers['Prefer'] = prefer
     }
     
-    const options: RequestInit = { method, headers }
+    const options: RequestInit = {
+      method,
+      headers
+    }
+    
     if (method !== 'GET' && payload) {
       options.body = JSON.stringify(payload)
     }

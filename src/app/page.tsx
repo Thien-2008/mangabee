@@ -4,11 +4,21 @@ import Link from 'next/link'
 export const dynamic = 'force-dynamic'
 
 export default async function Home() {
-  const { data: comics } = await supabase
+  const { data: comics, error } = await supabase
     .from('comics')
     .select('*')
     .order('created_at', { ascending: false })
     .limit(30)
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-[#0a0a0b] text-white p-4">
+        <div className="max-w-7xl mx-auto text-center mt-20">
+          <p className="text-red-500">Lỗi: {error.message}</p>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="min-h-screen bg-[#0a0a0b] text-white p-4">
