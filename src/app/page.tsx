@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
-// Hàm sửa link ảnh nếu thiếu domain
 function fixImageUrl(url: string | null): string | null {
   if (!url) return null
   if (url.startsWith('http')) return url
@@ -64,14 +63,6 @@ export default async function Home() {
               overflow: 'hidden',
               transition: 'transform 0.2s, box-shadow 0.2s',
               cursor: 'pointer'
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform = 'scale(1.03)'
-              e.currentTarget.style.boxShadow = '0 0 20px rgba(245,166,35,0.3)'
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform = 'scale(1)'
-              e.currentTarget.style.boxShadow = 'none'
             }}>
               <div style={{
                 aspectRatio: '3/4',
