@@ -36,7 +36,6 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   return (
     <main style={{ background: '#0a0a0b', color: 'white', minHeight: '100vh', padding: '20px 16px', fontFamily: 'Arial' }}>
-      <p style="color:red;text-align:center;">BUILD: 2026-05-02-1550</p>
 <h1 style={{ color: '#F5A623', textAlign: 'center', marginBottom: 24, fontSize: 28 }}>🐝 Mangabee</h1>
 
       {!comics || comics.length === 0 ? (
