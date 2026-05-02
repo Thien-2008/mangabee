@@ -112,49 +112,96 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: 8,
+          gap: 6,
           marginTop: 32,
           flexWrap: 'wrap'
         }}>
-          {currentPage > 1 && (
-            <Link href={`/?page=${currentPage - 1}`} style={btnStyle}>
+          {/* Nút Trước */}
+          {currentPage > 1 ? (
+            <Link href={`/?page=${currentPage - 1}`} style={{
+              textDecoration: 'none',
+              padding: '8px 14px',
+              borderRadius: 6,
+              background: '#2a2a2a',
+              color: '#EDEBE7',
+              fontSize: 14,
+              fontWeight: 'bold',
+              border: '1px solid #3a3a3a'
+            }}>
               ← Trước
             </Link>
+          ) : (
+            <span style={{
+              padding: '8px 14px',
+              borderRadius: 6,
+              background: '#1a1a1a',
+              color: '#555',
+              fontSize: 14,
+              fontWeight: 'bold',
+              border: '1px solid #2a2a2a',
+              cursor: 'not-allowed',
+              opacity: 0.5
+            }}>
+              ← Trước
+            </span>
           )}
 
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-            <Link
-              key={page}
-              href={`/?page=${page}`}
-              style={{
-                ...btnStyle,
-                background: page === currentPage ? '#F5A623' : '#2a2a2a',
-                color: page === currentPage ? '#000' : '#EDEBE7',
-                fontWeight: page === currentPage ? 'bold' : 'normal'
-              }}
-            >
-              {page}
-            </Link>
-          ))}
+          {/* Các nút số trang */}
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+            const isActive = page === currentPage
+            return (
+              <Link
+                key={page}
+                href={`/?page=${page}`}
+                style={{
+                  textDecoration: 'none',
+                  padding: '8px 14px',
+                  borderRadius: 6,
+                  background: isActive ? '#F5A623' : '#2a2a2a',
+                  color: isActive ? '#000' : '#EDEBE7',
+                  fontSize: 14,
+                  fontWeight: isActive ? 'bold' : 'normal',
+                  border: isActive ? '1px solid #F5A623' : '1px solid #3a3a3a',
+                  minWidth: 40,
+                  textAlign: 'center'
+                }}
+              >
+                {page}
+              </Link>
+            )
+          })}
 
-          {currentPage < totalPages && (
-            <Link href={`/?page=${currentPage + 1}`} style={btnStyle}>
+          {/* Nút Sau */}
+          {currentPage < totalPages ? (
+            <Link href={`/?page=${currentPage + 1}`} style={{
+              textDecoration: 'none',
+              padding: '8px 14px',
+              borderRadius: 6,
+              background: '#2a2a2a',
+              color: '#EDEBE7',
+              fontSize: 14,
+              fontWeight: 'bold',
+              border: '1px solid #3a3a3a'
+            }}>
               Sau →
             </Link>
+          ) : (
+            <span style={{
+              padding: '8px 14px',
+              borderRadius: 6,
+              background: '#1a1a1a',
+              color: '#555',
+              fontSize: 14,
+              fontWeight: 'bold',
+              border: '1px solid #2a2a2a',
+              cursor: 'not-allowed',
+              opacity: 0.5
+            }}>
+              Sau →
+            </span>
           )}
         </div>
       )}
     </main>
   )
-}
-
-const btnStyle: React.CSSProperties = {
-  textDecoration: 'none',
-  padding: '8px 16px',
-  borderRadius: 8,
-  background: '#2a2a2a',
-  color: '#EDEBE7',
-  fontSize: 14,
-  fontWeight: 'bold',
-  transition: 'background 0.2s'
 }

@@ -4,3 +4,590 @@ nohup: ignoring input
 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
 [33mPress CTRL+C to quit[0m
+127.0.0.1 - - [02/May/2026 15:18:09] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:18:13] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=tan-sinh-cap-ss-cua-hoc-vien-phap-thuat-sieu-cap, title=Tân Sinh Cấp SS Của Học Viện P
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+127.0.0.1 - - [02/May/2026 15:18:17] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:18:18] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:18:19] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:18:26] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:18:28] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:24:48] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:24:50] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:24:55] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=bat-dau-voi-tram-van-minh-te, title=Bắt Đầu Với Trăm Vạn Minh Tệ
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:24:59] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:00] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:02] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:07] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=toan-dan-chuyen-chuc--duy-ta-vo-chuc-tan-nhan, title=Toàn Dân Chuyển Chức: Duy Ta V
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:25:11] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:12] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:14] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:21] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=tan-sinh-cap-ss-cua-hoc-vien-phap-thuat-sieu-cap, title=Tân Sinh Cấp SS Của Học Viện P
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:25:25] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:26] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:28] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:33] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=nguoi-choi-pham-thuc, title=Người Chơi Phàm Thực
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:25:36] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:37] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:39] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:44] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=vua-thang-cap, title=Vua Thăng Cấp
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:25:48] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:49] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:51] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:25:56] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=sau-khi-tu-do-tai-chinh--ho-da-dang-hien-long-trung-thanh, title=Sau Khi Tự Do Tài Chính, Họ Đã
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:26:00] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:01] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:03] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:08] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=im-mieng-di-ac-long-ta-khong-muon-cung-nguoi-trong-tre-dau-, title=Im Miệng Đi Ác Long Ta Không M
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:26:12] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:14] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:16] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:24] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=tro-thanh-con-gai-cua-ke-phan-dien-trong-hoc-vien, title=Trở Thành Con Gái Của Kẻ Phản 
+  🔄 Gọi rewrite...
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:26:27] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:29] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:31] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:39] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=ta-chi-phoi-dia-nguc, title=Ta Chi Phối Địa Ngục
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:26:44] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:45] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:47] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:26:55] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=kiem-thanh-hoi-quy-va-hoc-thuyet-ma-phap, title=Kiếm Thánh Hồi Quy Và Học Thuy
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:27:00] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:01] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:03] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:11] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=vo-toi-la-giao-chu-ma-giao, title=Vợ Tôi Là Giáo Chủ Ma Giáo
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:27:16] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:17] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:19] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:28] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=cong-chuc-cap-kiem-than-hoi-quy, title=Công Chức Cấp Kiếm Thần Hồi Qu
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:27:32] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:33] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:36] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:42] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=suc-manh-cua-ac-than, title=Sức Mạnh Của Ác Thần
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:27:46] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:46] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:48] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:53] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=phoi-sac-gia, title=Phối Sắc Giả
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:27:57] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:27:58] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:00] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:05] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=sau-khi-chia-tay-hoa-khoi--vo-dao-cua-ta-thang-toi-cap-than, title=Sau Khi Chia Tay Hoa Khôi, Võ 
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:28:08] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:09] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:11] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:16] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=to-su-hoi-quy--tai-sinh-thanh-hau-due-sau-nghin-nam, title=Tổ Sư Hồi Quy: Tái Sinh Thành 
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:28:21] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:22] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:25] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:33] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=dam-sep, title=Đấm Sếp
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:28:37] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:39] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:41] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:50] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=dai-phap-su-cua-to-doi-hoi-quy, title=Đại Pháp Sư Của Tổ Đội Hồi Quy
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:28:53] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:55] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:28:57] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:06] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=unluck, title=Unluck
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:29:09] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:11] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:13] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:21] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=cong-chuc-dac-di, title=Công Chức Đặc Dị
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:29:25] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:26] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:29] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:37] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=phi-vu-den-toi, title=Phi Vụ Đen Tối
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:29:40] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:42] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:44] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:52] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=van-co-toi-cuong-tong, title=Vạn Cổ Tối Cường Tông
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:29:56] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:29:58] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:00] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:09] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=shark---ca-map, title=Shark
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:30:12] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:13] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:15] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:20] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=baek-xx, title=Baek XX
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:30:24] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:25] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:27] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:32] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=cua-hang-vo-danh, title=Cửa Hàng Vô Danh
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:30:36] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:41] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:43] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:51] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=anh-hung-quyet-dau-pha-khong, title=Anh Hùng Quyết Đấu Phá Không
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:30:56] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:30:57] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:00] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:08] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=anh-hung-cua-chung-ta-lam-gi-, title=Anh Hùng Của Chúng Ta Làm Gì?
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:31:13] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:14] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:17] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:25] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=chuyen-sinh-thanh-lieu-dot-bien, title=Chuyển Sinh Thành Liễu Đột Biế
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:31:29] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:30] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:33] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:41] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=chang-re-manh-nhat-lich-su, title=Chàng Rể Mạnh Nhất Lịch Sử
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:31:45] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:46] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:31:49] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:05] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=de-co-the-song-sot, title=Để Có Thể Sống Sót
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:32:09] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:11] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:14] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:25] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=cach-sinh-ton-cua-tho-san-ma-thu, title=Cách Sinh Tồn Của Thợ Săn Ma T
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:32:30] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:30] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:32] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:44] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=nguoi-choi-cua-gia-dinh-quy-toc-sa-sut, title=Người Chơi Của Gia Đình Quý Tộ
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:32:47] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:48] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:32:50] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:02] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=quy-cong-tu, title=Quý Công Tử
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:33:06] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:07] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:10] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:26] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=nhan-vien-thuc-tap-kim-cheolsu, title=Nhân Viên Thực Tập Kim Cheolsu
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:33:29] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:30] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:33] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:50] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=kiem-de-chuyen-the-vao-de-nhat-kiem-gia, title=Kiếm Đế Chuyển Thế Vào Đệ Nhất
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:33:54] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:55] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:33:58] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:34:21] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=gia-toc-tai-phiet, title=Gia Tộc Tài Phiệt
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:34:24] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:34:25] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:34:28] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:34:51] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=player, title=Player
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:34:56] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:34:57] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:34:59] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:35:52] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:35:54] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:35:55] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=toan-chuc-phap-su, title=Toàn Chức Pháp Sư
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:35:59] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:00] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:02] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:07] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=bat-dau-danh-dau-hoang-co-thanh-the, title=Bắt Đầu Đánh Dấu Hoang Cổ Thán
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:36:10] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:11] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:13] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:18] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=ta-la-dai-than-tien, title=Ta Là Đại Thần Tiên
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:36:21] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:22] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:24] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:29] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=tinh-giap-hon-tuong, title=Tinh Giáp Hồn Tướng
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:36:32] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:33] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:35] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:40] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=chuyen-sinh-thanh-goblin, title=Chuyển Sinh Thành Goblin
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:36:43] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:44] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:36:46] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:37:13] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:37:15] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:37:33] "POST /update-cookie HTTP/1.1" 200 -
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+🍪 Cookie mới
+
+[Flask] Nhận: slug=nguoi-bao-tro-cua-nhung-ke-phan-dien, title=Người Bảo Trợ Của Những Kẻ Phả
+  🔄 Gọi rewrite...
+  🚀 Gọi Groq API...
+  ✅ Đã viết lại mô tả
+  Supabase: 200
+127.0.0.1 - - [02/May/2026 15:37:36] "POST /enrich-comic HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:37:37] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:37:40] "POST /update-cookie HTTP/1.1" 200 -
+127.0.0.1 - - [02/May/2026 15:38:04] "POST /update-cookie HTTP/1.1" 200 -
