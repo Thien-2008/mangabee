@@ -14,27 +14,29 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
   const from = (currentPage - 1) * PER_PAGE
   const to = from + PER_PAGE - 1
 
-  // Lấy dữ liệu truyện
+  // 1. Lấy dữ liệu truyện
   const { data: comics, error: dataError } = await supabase
     .from('comics')
     .select('slug, title, cover_url')
     .order('created_at', { ascending: false })
     .range(from, to)
 
-  // Đếm tổng số truyện bằng fetch trực tiếp (chính xác hơn)
+  // 2. Đếm tổng số truyện bằng fetch – lần này thêm Prefer + Range
   let totalComics = 0
   try {
-    const countUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/comics?select=id&head=true&count=exact`
+    const countUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/comics?select=id`
     const countRes = await fetch(countUrl, {
       headers: {
-        'apikey': process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        'Authorization': `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`
+        apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+        Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`,
+        // 🔑 Hai dòng quyết định:
+        Prefer: 'count=exact',          // yêu cầu đếm tổng
+        Range: '0-0'                    // chỉ lấy 1 dòng để tiết kiệm băng thông
       }
     })
-    // Lấy count từ header Content-Range
     const contentRange = countRes.headers.get('content-range')
     if (contentRange) {
-      const match = contentRange.match(/\/(\d+)/)
+      const match = contentRange.match(/\/(\d+)$/)
       if (match) totalComics = parseInt(match[1], 10)
     }
   } catch (e) {
@@ -43,7 +45,7 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   const totalPages = Math.ceil(totalComics / PER_PAGE)
 
-  // Debug
+  // Debug info
   const debugInfo = {
     currentPage,
     totalComics,
