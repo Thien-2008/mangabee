@@ -9,12 +9,6 @@ BASE_DIR = "/data/data/com.termux/files/home/mangabee"
 COOKIE_FILE = os.path.join(BASE_DIR, "current_cookie.txt")
 API_PROXY = "https://mangabee.vercel.app/api/supabase"
 
-# State trong memory để theo dõi tiến trình
-state = {
-    'completed': set(),
-    'total': 0
-}
-
 @app.route('/update-cookie', methods=['POST'])
 def update_cookie():
     data = request.get_json()
@@ -28,9 +22,15 @@ def update_cookie():
 
 @app.route('/enrich-comic', methods=['POST'])
 def enrich_comic():
-    """Nhận dữ liệu từ Script B và upsert lên Supabase"""
     data = request.get_json()
+    print(f"\n[Flask] Nhận enrich:")
+    print(f"  slug: {data.get('slug')}")
+    print(f"  title: {data.get('title')}")
+    print(f"  cover_url: {data.get('cover_url', '')[:60]}...")
+    print(f"  description: {data.get('description', '')[:80]}...")
+    
     slug = data.get('slug')
+    title = data.get('title')
     cover_url = data.get('cover_url')
     description = data.get('description')
     
@@ -38,13 +38,18 @@ def enrich_comic():
         return jsonify({'error': 'Missing slug'}), 400
     
     payload = {}
+    if title:
+        payload['title'] = title
     if cover_url:
         payload['cover_url'] = cover_url
     if description:
         payload['description'] = description
     
     if not payload:
+        print("⚠️ Payload trống, không có gì để update")
         return jsonify({'ok': False, 'reason': 'No data'}), 200
+    
+    print(f"📤 Payload gửi đi: {payload}")
     
     try:
         resp = requests.post(API_PROXY, json={
@@ -54,34 +59,11 @@ def enrich_comic():
             'query': f'slug=eq.{slug}',
             'prefer': 'return=minimal'
         }, timeout=15)
-        
-        ok = resp.json().get('ok', False)
-        if ok:
-            state['completed'].add(slug)
-            print(f"✅ {slug} (đã xong: {len(state['completed'])})")
-        else:
-            print(f"⚠️ {slug}: {resp.text[:100]}")
-        
-        return jsonify({'ok': ok, 'slug': slug})
+        print(f"  Supabase response: {resp.status_code} {resp.text[:100]}")
+        return jsonify({'ok': resp.ok, 'status': resp.status_code})
     except Exception as e:
-        print(f"❌ {slug}: {e}")
+        print(f"❌ Lỗi: {e}")
         return jsonify({'ok': False, 'error': str(e)}), 500
-
-@app.route('/progress', methods=['GET'])
-def progress():
-    """Trả về tiến trình hiện tại"""
-    return jsonify({
-        'completed': len(state['completed']),
-        'total': state['total'],
-        'slugs': list(state['completed'])
-    })
-
-@app.route('/reset-progress', methods=['POST'])
-def reset_progress():
-    """Reset tiến trình (khi bắt đầu trang mới)"""
-    state['completed'] = set()
-    state['total'] = request.json.get('total', 0)
-    return jsonify({'ok': True})
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000)

@@ -3,29 +3,14 @@ import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
-function fixImageUrl(url: string | null): string | null {
-  if (!url) return null
-  if (url.startsWith('http')) return url
-  if (url.startsWith('/')) return `https://goctruyentranhvui23.com${url}`
-  return `https://goctruyentranhvui23.com/${url}`
-}
-
 export default async function Home() {
   const supabase = createSupabaseServer()
 
-  const { data: comics, error } = await supabase
+  const { data: comics } = await supabase
     .from('comics')
-    .select('slug, title, cover_url, description')
+    .select('slug, title, cover_url')
     .order('created_at', { ascending: false })
     .limit(30)
-
-  if (error) {
-    return (
-      <main style={{ background: '#0a0a0b', color: 'white', padding: 20 }}>
-        <p style={{ color: 'red' }}>Lỗi tải dữ liệu: {error.message}</p>
-      </main>
-    )
-  }
 
   if (!comics || comics.length === 0) {
     return (
@@ -61,7 +46,6 @@ export default async function Home() {
               background: '#1a1a1a',
               borderRadius: 12,
               overflow: 'hidden',
-              transition: 'transform 0.2s, box-shadow 0.2s',
               cursor: 'pointer'
             }}>
               <div style={{
@@ -74,8 +58,8 @@ export default async function Home() {
               }}>
                 {comic.cover_url ? (
                   <img
-                    src={fixImageUrl(comic.cover_url)!}
-                    alt={comic.title}
+                    src={comic.cover_url.startsWith('http') ? comic.cover_url : `https://goctruyentranhvui23.com${comic.cover_url}`}
+                    alt={comic.title || comic.slug}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     loading="lazy"
                   />
