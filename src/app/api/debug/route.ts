@@ -1,26 +1,31 @@
-import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
+import { createSupabaseServer } from '@/lib/supabaseServer';
+import { NextResponse } from 'next/server';
 
-export async function GET() {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const slug = searchParams.get('slug') || 'toi-la-tan-thu-co-cap-cao-nhat';
 
-  if (!supabaseUrl || !supabaseKey) {
-    return NextResponse.json({ 
-      error: 'Biến môi trường bị thiếu', 
-      url_exists: !!supabaseUrl, 
-      key_exists: !!supabaseKey 
-    }, { status: 500 })
-  }
+  const supabase = createSupabaseServer();
 
-  const supabase = createClient(supabaseUrl, supabaseKey)
-  const { data, error } = await supabase.from('comics').select('*').limit(1)
+  // Kiểm tra kết nối
+  const { data: allComics, error: listError } = await supabase
+    .from('comics')
+    .select('slug')
+    .limit(5);
+
+  // Tìm theo slug
+  const { data: comic, error } = await supabase
+    .from('comics')
+    .select('*')
+    .eq('slug', slug)
+    .single();
 
   return NextResponse.json({
-    url_exists: !!supabaseUrl,
-    key_exists: !!supabaseKey,
-    db_connect: !error,
-    error_message: error?.message || null,
-    sample_data: data
-  })
+    slug_requested: slug,
+    all_comics_sample: allComics,
+    list_error: listError?.message || null,
+    comic_found: comic ? true : false,
+    comic_data: comic || null,
+    error: error?.message || null,
+  });
 }
