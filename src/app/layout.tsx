@@ -7,10 +7,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           borderBottom: '2px solid #F5A623', textAlign: 'center',
           position: 'sticky', top: 0, zIndex: 100
         }}>
-          <a href="/" style={{
-            color: '#F5A623', textDecoration: 'none',
-            fontSize: 24, fontWeight: 'bold'
-          }}>
+          <a href="/" style={{ color: '#F5A623', textDecoration: 'none', fontSize: 24, fontWeight: 'bold' }}>
             🐝 Mangabee
           </a>
         </header>

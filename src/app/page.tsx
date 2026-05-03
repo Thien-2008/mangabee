@@ -29,32 +29,23 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   return (
     <>
-      {/* Grid truyện */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: 16 }}>
         {comics?.map((comic: any) => (
-          <Link key={comic.slug} href={`/truyen/${comic.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{
-              background: '#1a1a1a', borderRadius: 12, overflow: 'hidden',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              cursor: 'pointer'
-            }}>
+          <Link
+            key={comic.slug}
+            href={`/truyen/${encodeURIComponent(comic.slug)}`}
+            style={{ textDecoration: 'none', color: 'inherit' }}
+          >
+            <div style={{ background: '#1a1a1a', borderRadius: 12, overflow: 'hidden', transition: 'transform 0.2s' }}>
               <div style={{ aspectRatio: '3/4', background: '#2a2a2a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {comic.cover_url ? (
-                  <img
-                    src={fixImageUrl(comic.cover_url)!}
-                    alt={comic.title}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                    loading="lazy"
-                  />
+                  <img src={fixImageUrl(comic.cover_url)!} alt={comic.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
                 ) : (
                   <span style={{ fontSize: 40 }}>📚</span>
                 )}
               </div>
               <div style={{ padding: '10px 12px' }}>
-                <h3 style={{
-                  fontSize: 14, fontWeight: 500, margin: 0,
-                  overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'
-                }}>
+                <h3 style={{ fontSize: 14, fontWeight: 500, margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {comic.title || comic.slug.replace(/-/g, ' ')}
                 </h3>
               </div>
@@ -63,20 +54,8 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
         ))}
       </div>
 
-      {/* Phân trang */}
       {totalPages > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 32, gap: 8, flexWrap: 'wrap' }}>
-          {currentPage > 1 && (
-            <Link
-              href={`/?page=${currentPage - 1}`}
-              style={{
-                padding: '8px 16px', background: '#2a2a2a', color: '#EDEBE7',
-                borderRadius: 6, textDecoration: 'none', fontSize: 14
-              }}
-            >
-              ← Trước
-            </Link>
-          )}
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
             <Link
               key={page}
@@ -87,24 +66,12 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
                 color: page === currentPage ? '#000' : '#EDEBE7',
                 borderRadius: 6,
                 textDecoration: 'none',
-                fontSize: 14,
                 fontWeight: page === currentPage ? 'bold' : 'normal',
               }}
             >
               {page}
             </Link>
           ))}
-          {currentPage < totalPages && (
-            <Link
-              href={`/?page=${currentPage + 1}`}
-              style={{
-                padding: '8px 16px', background: '#2a2a2a', color: '#EDEBE7',
-                borderRadius: 6, textDecoration: 'none', fontSize: 14
-              }}
-            >
-              Sau →
-            </Link>
-          )}
         </div>
       )}
     </>
