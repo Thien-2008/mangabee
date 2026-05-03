@@ -10,7 +10,7 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
   const from = (currentPage - 1) * PER_PAGE;
   const to = from + PER_PAGE - 1;
 
-  const supabase = createSupabaseServer();
+  const supabase = await createSupabaseServer();
   const { count } = await supabase.from('comics').select('*', { count: 'exact', head: true });
   const totalComics = count || 0;
   const totalPages = Math.ceil(totalComics / PER_PAGE);

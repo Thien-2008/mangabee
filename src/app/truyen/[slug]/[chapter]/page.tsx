@@ -2,7 +2,7 @@ import { createSupabaseServer } from '@/lib/supabaseServer';
 import Link from 'next/link';
 
 export default async function ChapterReader({ params }: { params: { slug: string; chapter: string } }) {
-  const supabase = createSupabaseServer();
+  const supabase = await createSupabaseServer();
 
   const { data: comic } = await supabase.from('comics').select('title').eq('slug', params.slug).single();
   const { data: chapter } = await supabase
