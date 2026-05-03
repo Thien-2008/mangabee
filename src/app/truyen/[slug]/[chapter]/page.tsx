@@ -90,7 +90,7 @@ export default async function ChapterReader({ params }: { params: { slug: string
         </div>
       ) : (
         <div style={{ textAlign: 'center', color: '#aaa', padding: 40 }}>
-          Chương này chưa có ảnh hoặc đang được tải về.
+          {chapter.fetched ? 'Chương này đang được xử lý...' : 'Chương này chưa có ảnh hoặc đang được tải về.'}
         </div>
       )}
 

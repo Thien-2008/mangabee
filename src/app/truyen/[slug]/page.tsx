@@ -34,7 +34,7 @@ export default async function ComicDetail({ params }: { params: { slug: string }
         </div>
         <div style={{ flex: 1 }}>
           <h1 style={{ color: '#F5A623', margin: 0 }}>{comic.title}</h1>
-          {comic.alternate_title && <p style={{ color: '#aaa' }}>{comic.alternate_title}</p>}
+          {comic.alternate_title && <p style={{ color: '#aaa' }}>Tên khác: {comic.alternate_title}</p>}
           {comic.author && <p>Tác giả: {comic.author}</p>}
           {comic.status && <p>Trạng thái: <span style={{ color: '#F5A623' }}>{comic.status}</span></p>}
           {comic.description && (
@@ -56,15 +56,20 @@ export default async function ComicDetail({ params }: { params: { slug: string }
                 key={ch.chapter_number}
                 href={`/truyen/${params.slug}/${ch.chapter_number}`}
                 style={{
-                  display: 'block', background: ch.images && ch.images.length > 0 ? '#1a3a1a' : '#1a1a1a',
-                  padding: '10px 14px', borderRadius: 8, textAlign: 'center',
-                  textDecoration: 'none', color: '#EDEBE7', fontSize: 14,
+                  display: 'block',
+                  background: ch.images && ch.images.length > 0 ? '#1a3a1a' : '#1a1a1a',
+                  padding: '10px 14px',
+                  borderRadius: 8,
+                  textAlign: 'center',
+                  textDecoration: 'none',
+                  color: '#EDEBE7',
+                  fontSize: 14,
                   border: '1px solid #333'
                 }}
               >
                 Chương {ch.chapter_number}
                 {ch.images && ch.images.length > 0 && (
-                  <span style={{ display: 'block', fontSize: 10, color: '#4CAF50' }}>✅ Có ảnh</span>
+                  <span style={{ display: 'block', fontSize: 10, color: '#4CAF50', marginTop: 4 }}>✅ {ch.images.length} ảnh</span>
                 )}
               </Link>
             ))}
