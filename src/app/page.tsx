@@ -12,21 +12,15 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
 
   const supabase = createSupabaseServer();
 
-  // Lấy tổng số truyện
-  const { count } = await supabase
-    .from('comics')
-    .select('*')
-    .selectWithCount();
-
-  const totalComics = count || 0;
-  const totalPages = Math.ceil(totalComics / PER_PAGE);
-
-  // Lấy dữ liệu trang hiện tại
-  const { data: comics } = await supabase
+  // Lấy tổng số truyện và dữ liệu trang hiện tại
+  const { data: comics, count } = await supabase
     .from('comics')
     .select('slug, title, cover_url')
     .order('created_at', { ascending: false })
     .range(from, to);
+
+  const totalComics = count || 0;
+  const totalPages = Math.ceil(totalComics / PER_PAGE);
 
   const fixImageUrl = (url: string | null) => {
     if (!url) return null;

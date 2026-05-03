@@ -18,11 +18,13 @@ export default async function ChapterReader({ params }: { params: { slug: string
 
   const images: string[] = chapter.images || [];
 
+  // Lấy tất cả chapter để điều hướng
   const { data: allChapters } = await supabase
     .from('chapters')
     .select('chapter_number')
     .eq('comic_slug', params.slug)
-    .order('chapter_number', { ascending: true });
+    .order('chapter_number', { ascending: true })
+    .all();
 
   const currentIndex = allChapters?.findIndex((ch: any) => ch.chapter_number === parseFloat(params.chapter)) ?? -1;
   const prevChapter = currentIndex > 0 ? allChapters![currentIndex - 1] : null;
@@ -30,7 +32,6 @@ export default async function ChapterReader({ params }: { params: { slug: string
 
   return (
     <div style={{ maxWidth: 800, margin: '0 auto' }}>
-      {/* Thanh điều hướng trên */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, background: '#1a1a1a', padding: '10px 16px', borderRadius: 8 }}>
         <Link href={`/truyen/${params.slug}`} style={{ color: '#F5A623', textDecoration: 'none', fontSize: 14 }}>← Về chi tiết</Link>
         <h2 style={{ color: '#F5A623', margin: 0, fontSize: 16 }}>{comic.title} - Chương {params.chapter}</h2>
@@ -40,7 +41,6 @@ export default async function ChapterReader({ params }: { params: { slug: string
         </div>
       </div>
 
-      {/* Ảnh */}
       {images.length > 0 ? (
         <div style={{ textAlign: 'center' }}>
           {images.map((img: string, idx: number) => (
@@ -51,7 +51,6 @@ export default async function ChapterReader({ params }: { params: { slug: string
         <div style={{ textAlign: 'center', color: '#aaa', padding: 40 }}>Chương này chưa có ảnh hoặc đang được tải về.</div>
       )}
 
-      {/* Thanh điều hướng dưới */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 20, background: '#1a1a1a', padding: '10px 16px', borderRadius: 8 }}>
         <Link href={`/truyen/${params.slug}`} style={{ color: '#F5A623', textDecoration: 'none', fontSize: 14 }}>← Về chi tiết</Link>
         <div style={{ display: 'flex', gap: 8 }}>

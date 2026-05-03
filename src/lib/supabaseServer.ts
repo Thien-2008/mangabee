@@ -1,66 +1,72 @@
+// Hàm helper gọi Supabase REST API trực tiếp (dùng fetch)
+// Trả về object mô phỏng cách gọi của supabase-js để dễ dùng
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const SUPABASE_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+
+async function restGet(path: string, headers?: Record<string, string>) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      ...headers,
+    },
+    cache: 'no-store',
+  });
+  if (!res.ok) return { data: null, count: 0 };
+  const data = await res.json();
+  const contentRange = res.headers.get('content-range');
+  const count = contentRange ? parseInt(contentRange.split('/')[1], 10) : 0;
+  return { data, count };
+}
+
+// Hàm tạo object query gần giống supabase-js
 export function createSupabaseServer() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  const baseUrl = `${SUPABASE_URL}`;
 
   return {
     from: (table: string) => ({
-      select: (columns: string, options?: any) => ({
+      select: (columns: string) => ({
+        // Lấy 1 dòng với điều kiện eq
         eq: (col: string, val: any) => ({
           single: async () => {
-            const query = `${url}/rest/v1/${table}?select=${columns}&${col}=eq.${encodeURIComponent(val)}`;
-            const res = await fetch(query, {
-              headers: {
-                'apikey': key,
-                'Authorization': `Bearer ${key}`,
-                'Content-Type': 'application/json'
-              },
-              cache: 'no-store'
-            });
-            if (!res.ok) return { data: null };
-            const data = await res.json();
-            return { data: Array.isArray(data) ? data[0] : data };
+            const res = await restGet(
+              `${table}?select=${columns}&${col}=eq.${encodeURIComponent(val)}`
+            );
+            return { data: Array.isArray(res.data) ? res.data[0] : res.data };
           },
-          order: (col: string, opts?: { ascending?: boolean }) => ({
-            range: async (from: number, to: number) => {
-              const asc = opts?.ascending ?? true;
-              const orderParam = asc ? `${col}.asc` : `${col}.desc`;
-              const rangeHeader = `${from}-${to}`;
-              const res = await fetch(
-                `${url}/rest/v1/${table}?select=${columns}&order=${orderParam}`,
-                {
-                  headers: {
-                    'apikey': key,
-                    'Authorization': `Bearer ${key}`,
-                    'Content-Type': 'application/json',
-                    'Range': rangeHeader
-                  },
-                  cache: 'no-store'
-                }
-              );
-              if (!res.ok) return { data: [], count: 0 };
-              const data = await res.json();
-              const contentRange = res.headers.get('content-range');
-              const count = contentRange ? parseInt(contentRange.split('/')[1]) : 0;
-              return { data, count };
-            }
-          }),
-          // Count
-          selectWithCount: async () => {
-            const res = await fetch(`${url}/rest/v1/${table}?select=${columns}`, {
-              headers: {
-                'apikey': key,
-                'Authorization': `Bearer ${key}`,
-                'Content-Type': 'application/json',
-                'Prefer': 'count=exact'
-              },
-              cache: 'no-store'
-            });
-            const data = await res.json();
-            const count = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
-            return { data, count };
-          }
-        })
-      })
-    })
+          // Cho phép gọi order sau eq? (ít dùng)
+        }),
+        // Sắp xếp và lấy range
+        order: (col: string, opts?: { ascending?: boolean }) => ({
+          range: async (from: number, to: number) => {
+            const asc = opts?.ascending ?? true;
+            const orderParam = asc ? `${col}.asc` : `${col}.desc`;
+            const rangeHeader = `${from}-${to}`;
+            const res = await restGet(
+              `${table}?select=${columns}&order=${orderParam}`,
+              {
+                'Range': rangeHeader,
+                'Prefer': 'count=exact',
+              }
+            );
+            return { data: res.data ?? [], count: res.count };
+          },
+          // Lấy toàn bộ (không range) – dùng cho trang chapter
+          all: async () => {
+            const res = await restGet(
+              `${table}?select=${columns}&order=${col}.${opts?.ascending ?? true ? 'asc' : 'desc'}`
+            );
+            return { data: res.data ?? [], count: res.count };
+          },
+        }),
+        // Lấy tất cả dòng (không phân trang) – dùng cho danh sách chapter
+        all: async () => {
+          const res = await restGet(`${table}?select=${columns}`);
+          return { data: res.data ?? [], count: res.count };
+        },
+      }),
+    }),
   };
 }
