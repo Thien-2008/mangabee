@@ -1,5 +1,5 @@
-import { createSupabaseServer } from '@/lib/supabaseServer';
 import Link from 'next/link';
+import { createSupabaseServer } from '@/lib/supabaseServer';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,11 +10,18 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
   const from = (currentPage - 1) * PER_PAGE;
   const to = from + PER_PAGE - 1;
 
-  const supabase = await createSupabaseServer();
-  const { count } = await supabase.from('comics').select('*', { count: 'exact', head: true });
+  const supabase = createSupabaseServer();
+
+  // Lấy tổng số truyện
+  const { count } = await supabase
+    .from('comics')
+    .select('*')
+    .selectWithCount();
+
   const totalComics = count || 0;
   const totalPages = Math.ceil(totalComics / PER_PAGE);
 
+  // Lấy dữ liệu trang hiện tại
   const { data: comics } = await supabase
     .from('comics')
     .select('slug, title, cover_url')
@@ -33,10 +40,10 @@ export default async function Home({ searchParams }: { searchParams: { page?: st
         {comics?.map((comic: any) => (
           <Link
             key={comic.slug}
-            href={`/truyen/${encodeURIComponent(comic.slug)}`}
+            href={`/truyen/${comic.slug}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
-            <div style={{ background: '#1a1a1a', borderRadius: 12, overflow: 'hidden', transition: 'transform 0.2s' }}>
+            <div style={{ background: '#1a1a1a', borderRadius: 12, overflow: 'hidden' }}>
               <div style={{ aspectRatio: '3/4', background: '#2a2a2a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {comic.cover_url ? (
                   <img src={fixImageUrl(comic.cover_url)!} alt={comic.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />

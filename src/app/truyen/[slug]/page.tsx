@@ -1,14 +1,21 @@
-import { createSupabaseServer } from '@/lib/supabaseServer';
 import Link from 'next/link';
+import { createSupabaseServer } from '@/lib/supabaseServer';
 
 export default async function ComicDetail({ params }: { params: { slug: string } }) {
-  const supabase = await createSupabaseServer();
-  const { data: comic } = await supabase.from('comics').select('*').eq('slug', params.slug).single();
+  const supabase = createSupabaseServer();
+
+  // Lấy thông tin truyện
+  const { data: comic } = await supabase
+    .from('comics')
+    .select('*')
+    .eq('slug', params.slug)
+    .single();
 
   if (!comic) {
-    return <div style={{ color: '#F5A623', textAlign: 'center', marginTop: 40 }}>Không tìm thấy truyện.</div>;
+    return <div style={{ color: '#F5A623', textAlign: 'center', marginTop: 40 }}>Không tìm thấy truyện. (Slug: {params.slug})</div>;
   }
 
+  // Lấy danh sách chapter
   const { data: chapters } = await supabase
     .from('chapters')
     .select('chapter_number, images')
@@ -23,6 +30,7 @@ export default async function ComicDetail({ params }: { params: { slug: string }
 
   return (
     <div style={{ maxWidth: 800, margin: '0 auto' }}>
+      {/* Thông tin truyện */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginBottom: 24 }}>
         <div style={{ flex: '0 0 200px', background: '#1a1a1a', borderRadius: 12, overflow: 'hidden' }}>
           {comic.cover_url ? (
@@ -45,6 +53,7 @@ export default async function ComicDetail({ params }: { params: { slug: string }
         </div>
       </div>
 
+      {/* Danh sách chapter */}
       <div>
         <h2 style={{ color: '#F5A623', borderBottom: '1px solid #333', paddingBottom: 8 }}>Danh sách chương</h2>
         {chapters && chapters.length > 0 ? (
