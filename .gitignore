@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 server.py
+server.py.backup*
+server.log
+current_cookie.txt
