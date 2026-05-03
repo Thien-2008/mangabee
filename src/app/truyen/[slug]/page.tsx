@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseServer';
+import { createSupabaseServer } from '@/lib/supabaseServer';
 
 export default async function ComicDetail({ params }: { params: { slug: string } }) {
+  const supabase = createSupabaseServer();
+
   const { data: comic, error } = await supabase
     .from('comics')
     .select('*')

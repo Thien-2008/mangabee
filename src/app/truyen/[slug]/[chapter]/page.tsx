@@ -1,7 +1,9 @@
 import Link from 'next/link';
-import { supabase } from '@/lib/supabaseServer';
+import { createSupabaseServer } from '@/lib/supabaseServer';
 
 export default async function ChapterReader({ params }: { params: { slug: string; chapter: string } }) {
+  const supabase = createSupabaseServer();
+
   const { data: comic } = await supabase.from('comics').select('title').eq('slug', params.slug).single();
   const { data: chapter } = await supabase
     .from('chapters')
