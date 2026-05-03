@@ -1,25 +1,26 @@
 import Link from 'next/link';
-import { createSupabaseServer } from '@/lib/supabaseServer';
+import { supabase } from '@/lib/supabaseServer';
 
 export default async function ComicDetail({ params }: { params: { slug: string } }) {
-  const supabase = createSupabaseServer();
-
-  const { data: comic } = await supabase
+  const { data: comic, error } = await supabase
     .from('comics')
     .select('*')
     .eq('slug', params.slug)
     .single();
 
+  if (error) {
+    console.error('[ComicDetail] Supabase error:', error.message);
+  }
+
   if (!comic) {
     return <div style={{ color: '#F5A623', textAlign: 'center', marginTop: 40 }}>Không tìm thấy truyện.</div>;
   }
 
-  // Lấy danh sách chapter (dùng .all() để lấy toàn bộ)
   const { data: chapters } = await supabase
     .from('chapters')
     .select('chapter_number, images')
-    .order('chapter_number', { ascending: false })
-    .all();
+    .eq('comic_slug', params.slug)
+    .order('chapter_number', { ascending: false });
 
   const fixImageUrl = (url: string | null) => {
     if (!url) return null;

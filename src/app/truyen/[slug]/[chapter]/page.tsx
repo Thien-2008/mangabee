@@ -1,9 +1,7 @@
 import Link from 'next/link';
-import { createSupabaseServer } from '@/lib/supabaseServer';
+import { supabase } from '@/lib/supabaseServer';
 
 export default async function ChapterReader({ params }: { params: { slug: string; chapter: string } }) {
-  const supabase = createSupabaseServer();
-
   const { data: comic } = await supabase.from('comics').select('title').eq('slug', params.slug).single();
   const { data: chapter } = await supabase
     .from('chapters')
@@ -18,13 +16,11 @@ export default async function ChapterReader({ params }: { params: { slug: string
 
   const images: string[] = chapter.images || [];
 
-  // Lấy tất cả chapter để điều hướng
   const { data: allChapters } = await supabase
     .from('chapters')
     .select('chapter_number')
     .eq('comic_slug', params.slug)
-    .order('chapter_number', { ascending: true })
-    .all();
+    .order('chapter_number', { ascending: true });
 
   const currentIndex = allChapters?.findIndex((ch: any) => ch.chapter_number === parseFloat(params.chapter)) ?? -1;
   const prevChapter = currentIndex > 0 ? allChapters![currentIndex - 1] : null;
