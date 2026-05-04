@@ -1,27 +1,9 @@
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+import { createClient } from '@supabase/supabase-js'
 
-async function restGet(path: string, extra: Record<string, string> = {}) {
-  const url = `${SUPABASE_URL}/rest/v1/${path}`
-  const res = await fetch(url, {
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-      'Content-Type': 'application/json',
-      ...extra,
-    },
-    cache: 'no-store',
-  })
-  if (!res.ok) {
-    const errorText = await res.text()
-    console.error(`[Supabase] ${res.status} on ${path}: ${errorText}`)
-    return { data: null, count: 0 }
-  }
-  const data = await res.json()
-  const cr = res.headers.get('content-range') ?? ''
-  const total = parseInt(cr.split('/')[1] ?? '0', 10)
-  return { data, count: isNaN(total) ? 0 : total }
-}
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
 export function fixImageUrl(url?: string | null): string {
   if (!url) return ''
@@ -32,28 +14,62 @@ export function fixImageUrl(url?: string | null): string {
 }
 
 export async function getComics(from: number, to: number) {
-  const { data, count } = await restGet(`comics?select=slug,title,cover_url,status&order=created_at.desc`, { Range: `${from}-${to}`, Prefer: 'count=exact' })
-  return { comics: (data as any[]) ?? [], count: count || 0 }
+  const { data, count } = await supabase
+    .from('comics')
+    .select('slug, title, cover_url, status', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, to)
+  return { comics: data ?? [], count: count ?? 0 }
 }
 
 export async function getComic(slug: string) {
-  const { data } = await restGet(`comics?select=*&slug=eq.${encodeURIComponent(slug)}`)
-  return Array.isArray(data) && data.length > 0 ? data[0] : null
+  console.log('[getComic] Looking for slug:', slug)
+  const { data, error } = await supabase
+    .from('comics')
+    .select('*')
+    .eq('slug', slug)
+    .single()
+  
+  if (error) {
+    console.error('[getComic] Supabase error:', error.message, error.code)
+    return null
+  }
+  console.log('[getComic] Found:', data?.title)
+  return data
 }
 
 export async function getChapters(comicSlug: string) {
-  const { data } = await restGet(`chapters?select=id,chapter_number,images,status,fetched&comic_slug=eq.${encodeURIComponent(comicSlug)}&order=chapter_number.desc`)
-  return (data as any[]) ?? []
+  const { data } = await supabase
+    .from('chapters')
+    .select('id, chapter_number, images, status, fetched')
+    .eq('comic_slug', comicSlug)
+    .order('chapter_number', { ascending: false })
+  return data ?? []
 }
 
 export async function getChapter(comicSlug: string, chapterNumber: number) {
-  const { data } = await restGet(`chapters?select=*&comic_slug=eq.${encodeURIComponent(comicSlug)}&chapter_number=eq.${chapterNumber}`)
-  return Array.isArray(data) && data.length > 0 ? data[0] : null
+  const { data } = await supabase
+    .from('chapters')
+    .select('*')
+    .eq('comic_slug', comicSlug)
+    .eq('chapter_number', chapterNumber)
+    .single()
+  return data
 }
 
 export async function getAdjacentChapters(comicSlug: string, chapterNumber: number) {
-  const { data } = await restGet(`chapters?select=chapter_number&comic_slug=eq.${encodeURIComponent(comicSlug)}&fetched=eq.true&order=chapter_number.asc`)
-  const nums = ((data as any[]) ?? []).map((c: any) => Number(c.chapter_number))
+  const { data } = await supabase
+    .from('chapters')
+    .select('chapter_number')
+    .eq('comic_slug', comicSlug)
+    .eq('fetched', true)
+    .order('chapter_number', { ascending: true })
+  
+  const nums = (data ?? []).map((c: any) => Number(c.chapter_number))
   const idx = nums.indexOf(chapterNumber)
-  return { prev: idx > 0 ? nums[idx - 1] : null, next: idx < nums.length - 1 ? nums[idx + 1] : null, all: nums }
+  return {
+    prev: idx > 0 ? nums[idx - 1] : null,
+    next: idx < nums.length - 1 ? nums[idx + 1] : null,
+    all: nums
+  }
 }
