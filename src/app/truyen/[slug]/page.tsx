@@ -1,89 +1,141 @@
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { getComic, getChapters, fixImageUrl } from '@/lib/supabaseServer'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ComicDetail({ params }: { params: { slug: string } }) {
-  const comic = await getComic(params.slug)
+export default async function ComicDetail({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const slug = params.slug
+  const [comic, chapters] = await Promise.all([getComic(slug), getChapters(slug)])
+  if (!comic) notFound()
 
-  if (!comic) {
-    return (
-      <div style={{ padding: 40, textAlign: 'center', color: '#f59e0b' }}>
-        <h1>Không tìm thấy truyện</h1>
-        <p>Slug: {params.slug}</p>
-        <Link href="/">← Về trang chủ</Link>
-      </div>
-    )
-  }
-
-  const chapters = await getChapters(params.slug)
   const cover = fixImageUrl(comic.cover_url)
-  const readyChapters = chapters.filter((c: any) => c.fetched && c.images?.length > 0)
-  const latestChap = readyChapters.length > 0 ? readyChapters[0] : null
-  const firstChap = readyChapters.length > 0 ? readyChapters[readyChapters.length - 1] : null
+  const ready = chapters.filter(
+    (c: any) => c.fetched && Array.isArray(c.images) && c.images.length > 0
+  )
+  const nums = ready.map((c: any) => Number(c.chapter_number))
+  const firstChap = nums.length ? Math.min(...nums) : null
+  const latestChap = nums.length ? Math.max(...nums) : null
 
   return (
     <div style={{ minHeight: '100vh', background: '#0d0d0f', color: '#f0ece4', fontFamily: 'sans-serif' }}>
-      <header style={{ background: '#131315', padding: '12px 20px', borderBottom: '1px solid #272523', position: 'sticky', top: 0, zIndex: 10 }}>
-        <Link href="/" style={{ color: '#f59e0b', textDecoration: 'none', fontSize: 18, fontWeight: 700 }}>🐝 Mangabee</Link>
+      <header style={{
+        position: 'sticky', top: 0, zIndex: 100,
+        background: 'rgba(13,13,15,.95)', backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid #272523', padding: '0 20px',
+        height: 56, display: 'flex', alignItems: 'center', gap: 12,
+      }}>
+        <Link href="/" style={{ color: '#f59e0b', fontWeight: 700, fontSize: 18 }}>🐝 Mangabee</Link>
+        <span style={{ color: '#52504e' }}>›</span>
+        <span style={{ color: '#9a9390', fontSize: 13, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {comic.title}
+        </span>
       </header>
 
-      <main style={{ maxWidth: 900, margin: '0 auto', padding: 24 }}>
-        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 32 }}>
-          <div style={{ width: 200, borderRadius: 12, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.6)' }}>
-            {cover ? (
-              <img src={cover} alt={comic.title} style={{ width: '100%', display: 'block' }} />
-            ) : (
-              <div style={{ height: 280, background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>📖</div>
-            )}
+      <main style={{ maxWidth: 1000, margin: '0 auto', padding: '36px 20px 80px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'clamp(150px,20%,200px) 1fr', gap: 32 }}>
+
+          {/* Cover */}
+          <div>
+            <div style={{ borderRadius: 10, overflow: 'hidden', border: '2px solid #272523', aspectRatio: '3/4', background: '#1c1c1f' }}>
+              {cover ? (
+                <img src={cover} alt={comic.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 40 }}>📖</div>
+              )}
+            </div>
+            <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {firstChap !== null && (
+                <Link href={`/truyen/${slug}/chuong-${firstChap}`} style={{
+                  display: 'block', textAlign: 'center',
+                  background: '#f59e0b', color: '#000',
+                  padding: '10px 0', borderRadius: 8, fontSize: 13, fontWeight: 700,
+                }}>▶ Đọc từ đầu</Link>
+              )}
+              {latestChap !== null && latestChap !== firstChap && (
+                <Link href={`/truyen/${slug}/chuong-${latestChap}`} style={{
+                  display: 'block', textAlign: 'center',
+                  background: '#1c1c1f', color: '#f0ece4',
+                  padding: '10px 0', borderRadius: 8, fontSize: 13,
+                  border: '1px solid #272523',
+                }}>⚡ Mới nhất</Link>
+              )}
+            </div>
           </div>
 
-          <div style={{ flex: 1, minWidth: 250 }}>
-            <h1 style={{ fontSize: 26, margin: '0 0 8px' }}>{comic.title}</h1>
-            {comic.alternate_title && <p style={{ color: '#888', fontStyle: 'italic' }}>{comic.alternate_title}</p>}
-            <div style={{ display: 'flex', gap: 12, margin: '12px 0', flexWrap: 'wrap' }}>
-              {comic.author && <span style={{ background: '#1a1a1a', padding: '4px 10px', borderRadius: 6, fontSize: 13 }}>✍️ {comic.author}</span>}
-              {comic.status && <span style={{ background: '#1a1a1a', padding: '4px 10px', borderRadius: 6, fontSize: 13, color: '#f59e0b' }}>{comic.status}</span>}
-            </div>
-            <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-              {firstChap && (
-                <Link href={`/truyen/${params.slug}/chuong-${firstChap.chapter_number}`}
-                  style={{ background: '#f59e0b', color: '#000', padding: '8px 16px', borderRadius: 6, textDecoration: 'none', fontWeight: 600, fontSize: 14 }}>
-                  ▶ Đọc từ đầu
-                </Link>
-              )}
-              {latestChap && latestChap.chapter_number !== firstChap?.chapter_number && (
-                <Link href={`/truyen/${params.slug}/chuong-${latestChap.chapter_number}`}
-                  style={{ background: '#1a1a1a', color: '#f59e0b', padding: '8px 16px', borderRadius: 6, textDecoration: 'none', border: '1px solid #333', fontSize: 14 }}>
-                  ⚡ Mới nhất
-                </Link>
-              )}
+          {/* Info */}
+          <div>
+            <h1 style={{ fontSize: 'clamp(20px,3vw,30px)', fontWeight: 700, lineHeight: 1.3 }}>{comic.title}</h1>
+            {comic.alternate_title && (
+              <p style={{ color: '#52504e', fontSize: 13, marginTop: 6, fontStyle: 'italic' }}>{comic.alternate_title}</p>
+            )}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 16 }}>
+              {comic.author && <Chip label="Tác giả" value={comic.author} />}
+              {comic.status && <Chip label="Trạng thái" value={comic.status} />}
+              <Chip label="Chương có sẵn" value={String(ready.length)} />
             </div>
             {comic.description && (
-              <div style={{ marginTop: 16, padding: 12, background: '#1a1a1a', borderRadius: 8, borderLeft: '3px solid #f59e0b' }}>
-                <p style={{ fontSize: 14, lineHeight: 1.6, color: '#ccc' }}>{comic.description}</p>
-              </div>
+              <p style={{
+                marginTop: 20, color: '#9a9390', fontSize: 14, lineHeight: 1.75,
+                borderLeft: '3px solid #f59e0b', paddingLeft: 14,
+              }}>{comic.description}</p>
             )}
           </div>
         </div>
 
-        <h2 style={{ borderBottom: '1px solid #272523', paddingBottom: 8, marginBottom: 16 }}>📚 Danh sách chương ({chapters.length})</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', gap: 8 }}>
-          {chapters.map((ch: any) => {
-            const hasImages = ch.images && ch.images.length > 0
-            return hasImages ? (
-              <Link key={ch.id} href={`/truyen/${params.slug}/chuong-${ch.chapter_number}`}
-                style={{ background: '#1a2a1a', color: '#f0ece4', padding: '10px', borderRadius: 6, textAlign: 'center', textDecoration: 'none', fontSize: 13, border: '1px solid #2a3a2a' }}>
-                Ch.{ch.chapter_number} <span style={{ fontSize: 10, color: '#4ade80' }}>✓</span>
-              </Link>
-            ) : (
-              <div key={ch.id} style={{ background: '#1a1a1a', color: '#666', padding: '10px', borderRadius: 6, textAlign: 'center', fontSize: 13, border: '1px solid #222' }}>
-                Ch.{ch.chapter_number} <span style={{ fontSize: 10 }}>⏳</span>
-              </div>
-            )
-          })}
+        {/* Chapter list */}
+        <div style={{ marginTop: 48 }}>
+          <h2 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16 }}>
+            Danh sách chương <span style={{ color: '#52504e', fontSize: 14, fontWeight: 400 }}>({chapters.length})</span>
+          </h2>
+          {chapters.length === 0 ? (
+            <p style={{ color: '#52504e', textAlign: 'center', padding: 40 }}>Chưa có chương nào.</p>
+          ) : (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(170px, 1fr))', gap: 8 }}>
+              {chapters.map((c: any) => {
+                const has = Array.isArray(c.images) && c.images.length > 0
+                const n = Number(c.chapter_number)
+                return has ? (
+                  <Link key={c.id} href={`/truyen/${slug}/chuong-${n}`}>
+                    <div style={{
+                      padding: '10px 14px', borderRadius: 8,
+                      background: '#161618', border: '1px solid #272523',
+                      display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                      fontSize: 13, cursor: 'pointer',
+                    }}>
+                      <span>Chương {n}</span>
+                      <span style={{ color: '#f59e0b', fontSize: 11 }}>✓</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={c.id} style={{
+                    padding: '10px 14px', borderRadius: 8,
+                    background: '#0f0f11', border: '1px dashed #1e1e20',
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    fontSize: 13, opacity: 0.4,
+                  }}>
+                    <span>Chương {n}</span>
+                    <span style={{ fontSize: 10, color: '#52504e' }}>Đang tải</span>
+                  </div>
+                )
+              })}
+            </div>
+          )}
         </div>
       </main>
+    </div>
+  )
+}
+
+function Chip({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{ background: '#1c1c1f', border: '1px solid #272523', borderRadius: 8, padding: '5px 12px', fontSize: 12 }}>
+      <span style={{ color: '#52504e', marginRight: 6 }}>{label}:</span>
+      <span style={{ fontWeight: 500 }}>{value}</span>
     </div>
   )
 }
