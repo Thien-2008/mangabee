@@ -35,22 +35,22 @@ export async function getComics(from: number, to: number) {
 }
 
 export async function getComic(slug: string) {
-  const { data } = await restGet(`comics?select=*&slug=eq.${slug}`)
+  const { data } = await restGet(`comics?select=*&slug=eq.${encodeURIComponent(slug)}`)
   return Array.isArray(data) ? (data[0] ?? null) : null
 }
 
 export async function getChapters(comicSlug: string) {
-  const { data } = await restGet(`chapters?select=id,chapter_number,images,status,fetched&comic_slug=eq.${comicSlug}&order=chapter_number.desc`)
+  const { data } = await restGet(`chapters?select=id,chapter_number,images,status,fetched&comic_slug=eq.${encodeURIComponent(comicSlug)}&order=chapter_number.desc`)
   return (data as any[]) ?? []
 }
 
 export async function getChapter(comicSlug: string, chapterNumber: number) {
-  const { data } = await restGet(`chapters?select=*&comic_slug=eq.${comicSlug}&chapter_number=eq.${chapterNumber}`)
+  const { data } = await restGet(`chapters?select=*&comic_slug=eq.${encodeURIComponent(comicSlug)}&chapter_number=eq.${chapterNumber}`)
   return Array.isArray(data) ? (data[0] ?? null) : null
 }
 
 export async function getAdjacentChapters(comicSlug: string, chapterNumber: number) {
-  const { data } = await restGet(`chapters?select=chapter_number&comic_slug=eq.${comicSlug}&fetched=eq.true&order=chapter_number.asc`)
+  const { data } = await restGet(`chapters?select=chapter_number&comic_slug=eq.${encodeURIComponent(comicSlug)}&fetched=eq.true&order=chapter_number.asc`)
   const nums = ((data as any[]) ?? []).map((c: any) => Number(c.chapter_number))
   const idx = nums.indexOf(chapterNumber)
   return { prev: idx > 0 ? nums[idx - 1] : null, next: idx < nums.length - 1 ? nums[idx + 1] : null, all: nums }
