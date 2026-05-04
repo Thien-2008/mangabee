@@ -1,8 +1,11 @@
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
+// Ưu tiên Service Role Key để bypass RLS, tránh 403
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 async function restGet(path: string, extra: Record<string, string> = {}) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+  const url = `${SUPABASE_URL}/rest/v1/${path}`
+  console.log('[Supabase] GET', url)
+  const res = await fetch(url, {
     headers: {
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
@@ -12,13 +15,14 @@ async function restGet(path: string, extra: Record<string, string> = {}) {
     cache: 'no-store',
   })
   if (!res.ok) {
-    console.error(`[Supabase] ${res.status} — ${path}`)
-    return { data: null, count: 0 }
+    const errorText = await res.text()
+    console.error(`[Supabase] ${res.status} — ${path} — ${errorText}`)
+    return { data: null, count: 0, error: `${res.status}: ${errorText}` }
   }
   const data = await res.json()
   const cr = res.headers.get('content-range') ?? ''
   const total = parseInt(cr.split('/')[1] ?? '0', 10)
-  return { data, count: isNaN(total) ? 0 : total }
+  return { data, count: isNaN(total) ? 0 : total, error: null }
 }
 
 export function fixImageUrl(url?: string | null): string {
@@ -31,12 +35,16 @@ export function fixImageUrl(url?: string | null): string {
 
 export async function getComics(from: number, to: number) {
   const { data, count } = await restGet(`comics?select=slug,title,cover_url,status&order=created_at.desc`, { Range: `${from}-${to}`, Prefer: 'count=exact' })
-  return { comics: (data as any[]) ?? [], count }
+  return { comics: (data as any[]) ?? [], count: count || 0 }
 }
 
 export async function getComic(slug: string) {
-  const { data } = await restGet(`comics?select=*&slug=eq.${encodeURIComponent(slug)}`)
-  return Array.isArray(data) ? (data[0] ?? null) : null
+  const { data, error } = await restGet(`comics?select=*&slug=eq.${encodeURIComponent(slug)}`)
+  if (error) {
+    console.error('[getComic] Error:', error)
+    return null
+  }
+  return Array.isArray(data) && data.length > 0 ? data[0] : null
 }
 
 export async function getChapters(comicSlug: string) {
@@ -46,7 +54,7 @@ export async function getChapters(comicSlug: string) {
 
 export async function getChapter(comicSlug: string, chapterNumber: number) {
   const { data } = await restGet(`chapters?select=*&comic_slug=eq.${encodeURIComponent(comicSlug)}&chapter_number=eq.${chapterNumber}`)
-  return Array.isArray(data) ? (data[0] ?? null) : null
+  return Array.isArray(data) && data.length > 0 ? data[0] : null
 }
 
 export async function getAdjacentChapters(comicSlug: string, chapterNumber: number) {
