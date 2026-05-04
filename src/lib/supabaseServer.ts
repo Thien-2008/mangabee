@@ -1,10 +1,8 @@
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL!
-// Ưu tiên Service Role Key để bypass RLS, tránh 403
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 async function restGet(path: string, extra: Record<string, string> = {}) {
   const url = `${SUPABASE_URL}/rest/v1/${path}`
-  console.log('[Supabase] GET', url)
   const res = await fetch(url, {
     headers: {
       apikey: SUPABASE_KEY,
@@ -16,13 +14,13 @@ async function restGet(path: string, extra: Record<string, string> = {}) {
   })
   if (!res.ok) {
     const errorText = await res.text()
-    console.error(`[Supabase] ${res.status} — ${path} — ${errorText}`)
-    return { data: null, count: 0, error: `${res.status}: ${errorText}` }
+    console.error(`[Supabase] ${res.status} on ${path}: ${errorText}`)
+    return { data: null, count: 0 }
   }
   const data = await res.json()
   const cr = res.headers.get('content-range') ?? ''
   const total = parseInt(cr.split('/')[1] ?? '0', 10)
-  return { data, count: isNaN(total) ? 0 : total, error: null }
+  return { data, count: isNaN(total) ? 0 : total }
 }
 
 export function fixImageUrl(url?: string | null): string {
@@ -39,11 +37,7 @@ export async function getComics(from: number, to: number) {
 }
 
 export async function getComic(slug: string) {
-  const { data, error } = await restGet(`comics?select=*&slug=eq.${encodeURIComponent(slug)}`)
-  if (error) {
-    console.error('[getComic] Error:', error)
-    return null
-  }
+  const { data } = await restGet(`comics?select=*&slug=eq.${encodeURIComponent(slug)}`)
   return Array.isArray(data) && data.length > 0 ? data[0] : null
 }
 
